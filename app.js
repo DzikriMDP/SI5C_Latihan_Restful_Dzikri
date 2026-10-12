@@ -40,17 +40,12 @@ app.use(cors({
   origin: process.env.CORS_ORIGIN,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
-app.use(logger);
-app.use(cors({
-  origin: process.env.CORS_ORIGIN,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-}));
 
 // Middleware agar req.body (JSON) dapat dibaca
 app.use(express.json());
 
 // ---------- Route dasar ----------
-app.use('/mahasiswa', cekApiKey, mahasiswaRoutes);
+app.use('/mahasiswa', mahasiswaRoutes);
 app.use('/fakultas', fakultasRoutes);
 app.use('/prodi', prodiRoutes);
 app.use(express.json());
