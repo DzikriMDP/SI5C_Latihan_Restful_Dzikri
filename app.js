@@ -33,6 +33,12 @@ const { notFoundHandler, errorHandler } = require('./middlewares/errorHandler');
 const mahasiswaRoutes = require('./routes/mahasiswaRoutes');
 const fakultasRoutes = require('./routes/fakultasRoutes');
 const prodiRoutes = require('./routes/prodiRoutes');
+const authRoutes = require('./routes/authRoutes');
+
+if (!process.env.JWT_SECRET) {
+  console.error('JWT_SECRET belum diisi di .env');
+  process.exit(1);
+}
 
 // ---------- Middleware global ----------
 app.use(logger);
@@ -48,17 +54,13 @@ app.use(express.json());
 app.use('/mahasiswa', mahasiswaRoutes);
 app.use('/fakultas', fakultasRoutes);
 app.use('/prodi', prodiRoutes);
+app.use('/auth', authRoutes);
 app.use(express.json());
 
 // ---------- Route dasar ----------
 app.get('/', (req, res) => {
   res.send('Server Express.js berjalan!');
 });
-
-// ---------- Route per modul ----------
-app.use('/mahasiswa', mahasiswaRoutes);
-app.use('/fakultas', fakultasRoutes);
-app.use('/prodi', prodiRoutes);
 
 // ---------- Handler 404 dan error handler (paling bawah) ----------
 app.use(notFoundHandler);
